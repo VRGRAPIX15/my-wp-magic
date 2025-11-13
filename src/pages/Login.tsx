@@ -53,7 +53,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-luxury-dark via-luxury-deep to-luxury-dark relative overflow-hidden">
+    <div className="min-h-dvh w-full flex items-center justify-center bg-gradient-to-br from-luxury-dark via-luxury-deep to-luxury-dark relative overflow-hidden">
       {/* Optimized background for mobile */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-luxury-gold/5 rounded-full blur-3xl opacity-50" />

@@ -98,7 +98,7 @@ const Gallery = () => {
   return (
     <>
       <OnboardingTutorial />
-      <div className="min-h-screen bg-background flex flex-col">
+      <div className="flex min-h-dvh flex-col bg-background">
         <TopBar />
       <SecondBar
         breadcrumb={breadcrumb}

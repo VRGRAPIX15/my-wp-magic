@@ -15,7 +15,10 @@ export default defineConfig(({ mode }) => ({
     mode === 'development' && componentTagger(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt'],
+      includeAssets: ['favicon.ico', 'robots.txt', 'offline.html'],
+      devOptions: {
+        enabled: true,
+      },
       manifest: {
         name: 'Client Gallery',
         short_name: 'Gallery',
@@ -23,7 +26,8 @@ export default defineConfig(({ mode }) => ({
         theme_color: '#1a4d3a',
         background_color: '#0a0f0c',
         display: 'fullscreen',
-        orientation: 'portrait',
+        display_override: ['fullscreen', 'standalone'],
+        orientation: 'any',
         start_url: '/',
         scope: '/',
         icons: [
@@ -42,7 +46,10 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
+        navigateFallback: '/offline.html',
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,avif}'],
+        clientsClaim: true,
+        skipWaiting: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/drive\.google\.com\/.*/i,
@@ -52,6 +59,33 @@ export default defineConfig(({ mode }) => ({
               expiration: {
                 maxEntries: 500,
                 maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/script\.google\.com\/macros\/s\/AKfycbyF9WGkaM0egOl_kkV2f3Q50Fqxch1Qw7GalDnsgO3jfA-mwB_UW3GhYZDlhbZngypi4w\/exec.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'api-cache',
+              networkTimeoutSeconds: 10,
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 5,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            urlPattern: ({ request, sameOrigin }) =>
+              sameOrigin && request.destination === 'image',
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'image-cache',
+              expiration: {
+                maxEntries: 200,
+                maxAgeSeconds: 60 * 60 * 24 * 14,
               },
             },
           },

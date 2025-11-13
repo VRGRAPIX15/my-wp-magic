@@ -71,7 +71,7 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="max-w-[100vw] h-[100vh] sm:max-w-7xl sm:h-[95vh] p-0 gap-0 sm:rounded-lg">
+      <DialogContent className="max-w-[100vw] h-[100dvh] sm:max-w-7xl sm:h-[90vh] p-0 gap-0 sm:rounded-lg">
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-2 sm:p-4 border-b bg-card/95 backdrop-blur">
