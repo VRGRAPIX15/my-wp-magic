@@ -9,6 +9,7 @@ import { Heart, Sun, Moon, Monitor, Grid3x3, Download, BookOpen, Send, LogOut } 
 import { useToast } from '@/hooks/use-toast';
 import { api } from '@/lib/api';
 import JSZip from 'jszip';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface SecondBarProps {
   breadcrumb: BreadcrumbItem[];
@@ -25,6 +26,7 @@ const SecondBar = ({ breadcrumb, onBreadcrumbClick, gridSize, onGridSizeChange, 
   const { user, logout, token } = useAuth();
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const handleDownloadAll = async () => {
     toast({ title: 'Feature coming soon', description: 'Download all functionality will be available soon' });
@@ -69,24 +71,25 @@ const SecondBar = ({ breadcrumb, onBreadcrumbClick, gridSize, onGridSizeChange, 
   };
 
   return (
-    <div className="h-12 border-b bg-card flex items-center justify-between px-4">
-      <Breadcrumb>
-        <BreadcrumbList>
+    <div className="h-12 border-b bg-card flex items-center justify-between px-2 sm:px-4 gap-2">
+      <Breadcrumb className="flex-1 min-w-0">
+        <BreadcrumbList className="flex-wrap">
           {breadcrumb.map((item, index) => (
             <div key={item.id} className="flex items-center">
               {index > 0 && <BreadcrumbSeparator />}
               <BItem>
                 {index === breadcrumb.length - 1 ? (
-                  <BreadcrumbPage>{item.name}</BreadcrumbPage>
+                  <BreadcrumbPage className="text-xs sm:text-sm">{isMobile && item.name.length > 15 ? item.name.substring(0, 15) + '...' : item.name}</BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink 
                     href="#" 
+                    className="text-xs sm:text-sm"
                     onClick={(e) => {
                       e.preventDefault();
                       onBreadcrumbClick(item.id);
                     }}
                   >
-                    {item.name}
+                    {isMobile && item.name.length > 10 ? item.name.substring(0, 10) + '...' : item.name}
                   </BreadcrumbLink>
                 )}
               </BItem>

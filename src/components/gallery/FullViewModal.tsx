@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { MediaItem } from '@/lib/api';
 import { X, ChevronLeft, ChevronRight, Heart, MessageCircle, Download, Share2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface FullViewModalProps {
   item: MediaItem;
@@ -22,7 +23,9 @@ const PRESETS = ['Half sheet', 'Important', 'Bride Family', 'Groom Family'];
 const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: FullViewModalProps) => {
   const [commentText, setCommentText] = useState('');
   const [preset, setPreset] = useState(item.preset || '');
+  const [showCommentSection, setShowCommentSection] = useState(false);
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const currentIndex = items.findIndex(i => i.id === item.id);
   const total = items.length;
@@ -68,95 +71,108 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="max-w-7xl h-[90vh] p-0 gap-0">
+      <DialogContent className="max-w-[100vw] h-[100vh] sm:max-w-7xl sm:h-[95vh] p-0 gap-0 sm:rounded-lg">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b">
-            <div className="flex items-center gap-4">
-              <Badge variant="outline">
+          <div className="flex items-center justify-between p-2 sm:p-4 border-b bg-card/95 backdrop-blur">
+            <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
+              <Badge variant="outline" className="text-xs shrink-0">
                 {currentIndex + 1} / {total}
               </Badge>
-              <span className="text-sm font-medium truncate max-w-md">{item.name}</span>
+              <span className="text-xs sm:text-sm font-medium truncate">{item.name}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" onClick={() => onLike(item)}>
-                <Heart className={`w-5 h-5 ${item.likedByMe ? 'fill-current text-destructive' : ''}`} />
+            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={() => onLike(item)}>
+                <Heart className={`w-4 h-4 sm:w-5 sm:h-5 ${item.likedByMe ? 'fill-current text-destructive' : ''}`} />
               </Button>
-              <Badge variant="secondary">{item.likeCount}</Badge>
+              {!isMobile && <Badge variant="secondary" className="text-xs">{item.likeCount}</Badge>}
               
-              <Button variant="ghost" size="icon">
-                <MessageCircle className="w-5 h-5" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 sm:h-10 sm:w-10"
+                onClick={() => setShowCommentSection(!showCommentSection)}
+              >
+                <MessageCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${showCommentSection ? 'fill-current text-primary' : ''}`} />
               </Button>
-              <Badge variant="secondary">{item.commentCount}</Badge>
+              {!isMobile && <Badge variant="secondary" className="text-xs">{item.commentCount}</Badge>}
 
-              <Button variant="ghost" size="icon" onClick={() => window.open(item.downloadUrl, '_blank')}>
-                <Download className="w-5 h-5" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={() => window.open(item.downloadUrl, '_blank')}>
+                <Download className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
 
-              <Button variant="ghost" size="icon" onClick={handleShare}>
-                <Share2 className="w-5 h-5" />
-              </Button>
+              {!isMobile && (
+                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={handleShare}>
+                  <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                </Button>
+              )}
 
-              <Button variant="ghost" size="icon" onClick={onClose}>
-                <X className="w-5 h-5" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={onClose}>
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </div>
           </div>
 
           {/* Image Container */}
-          <div className="flex-1 relative flex items-center justify-center bg-muted p-4 overflow-hidden">
+          <div className="flex-1 relative flex items-center justify-center bg-black/95 p-2 sm:p-4 overflow-hidden">
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur"
+              className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full"
               onClick={handlePrev}
               disabled={currentIndex === 0}
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </Button>
 
             <img
               src={item.previewUrl}
               alt={item.name}
-              className="max-w-full max-h-full object-contain"
+              className="max-w-full max-h-full object-contain select-none"
+              loading="lazy"
+              onContextMenu={(e) => e.preventDefault()}
             />
 
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur"
+              className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full"
               onClick={handleNext}
               disabled={currentIndex === total - 1}
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </Button>
           </div>
 
           {/* Comment Section */}
-          <div className="p-4 border-t bg-card space-y-3">
-            <div className="flex gap-2">
-              <Select value={preset} onValueChange={setPreset}>
-                <SelectTrigger className="w-48">
-                  <SelectValue placeholder="Select preset..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {PRESETS.map(p => (
-                    <SelectItem key={p} value={p}>{p}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Textarea
-                placeholder="Add a comment..."
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                className="flex-1 min-h-[60px] resize-none"
-              />
-              <Button onClick={handleSubmitComment}>
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Comment
-              </Button>
+          {showCommentSection && (
+            <div className="p-3 sm:p-4 border-t bg-card/95 backdrop-blur space-y-3 animate-fade-in">
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Select value={preset} onValueChange={setPreset}>
+                  <SelectTrigger className="w-full sm:w-48 h-9">
+                    <SelectValue placeholder="Select preset..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PRESETS.map(p => (
+                      <SelectItem key={p} value={p}>{p}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="flex gap-2 flex-1">
+                  <Textarea
+                    placeholder="Add a comment..."
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    className="flex-1 min-h-[60px] sm:min-h-[80px] resize-none text-sm"
+                  />
+                  <Button onClick={handleSubmitComment} className="h-auto">
+                    <MessageCircle className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden sm:inline">Comment</span>
+                  </Button>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

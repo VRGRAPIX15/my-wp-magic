@@ -16,11 +16,11 @@ interface MasonryGridProps {
 const MasonryGrid = ({ items, gridSize, selectedItems, onSelectItem, onFolderClick, onItemClick, onLike }: MasonryGridProps) => {
   const breakpointColumns = {
     default: gridSize,
-    1536: Math.min(gridSize, 5),
-    1280: Math.min(gridSize, 4),
-    1024: Math.min(gridSize, 3),
-    768: 2,
-    640: 1,
+    1536: Math.min(gridSize, 6),
+    1280: Math.min(gridSize, 5),
+    1024: Math.min(gridSize, 4),
+    768: Math.min(gridSize, 3),
+    640: Math.min(gridSize, 2),
   };
 
   return (
