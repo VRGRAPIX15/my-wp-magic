@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import {
@@ -23,6 +24,7 @@ import {
   SlidersHorizontal,
   Sparkles
 } from 'lucide-react';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 
 interface TutorialStep {
   icon: any;
@@ -114,6 +116,9 @@ export const OnboardingTutorial = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-3xl border-luxury-gold/20 bg-card backdrop-blur-xl p-0 gap-0 overflow-hidden">
+        <VisuallyHidden.Root>
+          <DialogTitle>Gallery Tutorial</DialogTitle>
+        </VisuallyHidden.Root>
         <div className="relative">
           {/* Progress bar */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-muted z-10">
