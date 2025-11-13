@@ -45,6 +45,8 @@ const MediaCard = ({ item, selected, onSelect, onClick, onLike }: MediaCardProps
         <div className="relative aspect-square overflow-hidden bg-muted">
           <img
             src={item.thumbnail}
+            srcSet={`${item.thumbnail} 480w, ${item.previewUrl} 1200w`}
+            sizes="(max-width: 600px) 100vw, (max-width:1200px) 50vw, 33vw"
             alt={item.name}
             className="w-full h-full object-cover transition-transform group-hover:scale-105"
             loading="lazy"
