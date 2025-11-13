@@ -59,7 +59,7 @@ export default {
         },
         luxury: {
           gold: "hsl(var(--luxury-gold))",
-          purple: "hsl(var(--luxury-purple))",
+          green: "hsl(var(--luxury-green))",
           deep: "hsl(var(--luxury-deep))",
           dark: "hsl(var(--luxury-dark))",
         },

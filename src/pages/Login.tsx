@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +14,7 @@ const Login = () => {
   const [showPWAPrompt, setShowPWAPrompt] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -42,6 +44,7 @@ const Login = () => {
     setLoading(true);
     try {
       await login(userId, password);
+      navigate('/');
     } catch (error) {
       console.error('Login error:', error);
     } finally {
@@ -54,7 +57,7 @@ const Login = () => {
       {/* Optimized background for mobile */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-luxury-gold/5 rounded-full blur-3xl opacity-50" />
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-luxury-purple/5 rounded-full blur-3xl opacity-50" />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-luxury-green/5 rounded-full blur-3xl opacity-50" />
       </div>
 
       <div className="w-full max-w-md relative z-10 px-3 sm:px-4 py-4">
@@ -63,18 +66,18 @@ const Login = () => {
           <CardContent className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
             {/* Header */}
             <div className="text-center space-y-2">
-              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-luxury-gold to-luxury-purple bg-clip-text text-transparent">
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-luxury-gold to-luxury-green bg-clip-text text-transparent">
                 Client Gallery
               </h1>
             </div>
 
             {/* Welcome section */}
             <div className="text-center space-y-2 sm:space-y-3">
-              <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-luxury-gold to-luxury-purple shadow-lg">
+              <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-luxury-gold to-luxury-green shadow-lg">
                 <Camera className="w-7 h-7 sm:w-8 sm:h-8 text-luxury-dark" />
               </div>
               <div className="space-y-1">
-                <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-luxury-gold to-luxury-purple bg-clip-text text-transparent">
+                <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-luxury-gold to-luxury-green bg-clip-text text-transparent">
                   Welcome
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground">
@@ -111,7 +114,7 @@ const Login = () => {
               </div>
               <Button 
                 type="submit" 
-                className="w-full h-11 sm:h-12 bg-gradient-to-r from-luxury-gold to-luxury-purple hover:opacity-90 text-luxury-dark font-semibold text-base transition-all duration-300 shadow-lg"
+                className="w-full h-11 sm:h-12 bg-gradient-to-r from-luxury-gold to-luxury-green hover:opacity-90 text-luxury-dark font-semibold text-base transition-all duration-300 shadow-lg"
                 disabled={loading}
               >
                 {loading ? (
@@ -136,7 +139,7 @@ const Login = () => {
                   onClick={handleInstallPWA}
                   variant="outline"
                   size="sm"
-                  className="w-full border-luxury-purple/30 hover:bg-luxury-purple/10 text-sm"
+                  className="w-full border-luxury-green/30 hover:bg-luxury-green/10 text-sm"
                 >
                   Install App
                 </Button>
@@ -161,7 +164,7 @@ const Login = () => {
             </Card>
             <Card className="bg-card/95 backdrop-blur-sm border-border/30 p-2 sm:p-2.5">
               <div className="flex flex-col items-center text-center space-y-0.5 sm:space-y-1">
-                <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-luxury-purple" />
+                <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-luxury-green" />
                 <p className="text-[9px] sm:text-[10px] font-medium text-foreground">Android</p>
                 <p className="text-[8px] sm:text-[9px] text-muted-foreground leading-tight">
                   Menu → Install
