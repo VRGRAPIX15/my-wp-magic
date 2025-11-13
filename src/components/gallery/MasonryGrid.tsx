@@ -1,4 +1,3 @@
-import Masonry from 'react-masonry-css';
 import { MediaItem } from '@/lib/api';
 import MediaCard from './MediaCard';
 import './masonry.css';
@@ -14,38 +13,28 @@ interface MasonryGridProps {
 }
 
 const MasonryGrid = ({ items, gridSize, selectedItems, onSelectItem, onFolderClick, onItemClick, onLike }: MasonryGridProps) => {
-  const breakpointColumns = {
-    default: gridSize,
-    1536: Math.min(gridSize, 6),
-    1280: Math.min(gridSize, 5),
-    1024: Math.min(gridSize, 4),
-    768: Math.min(gridSize, 3),
-    640: Math.min(gridSize, 2),
-  };
-
+  // Use a pure-CSS masonry (columns) layout for responsiveness.
+  // Keep all handlers and logic intact – we only change the layout wrapper.
   return (
-    <Masonry
-      breakpointCols={breakpointColumns}
-      className="masonry-grid"
-      columnClassName="masonry-grid-column"
-    >
+    <div className="masonry" aria-live="polite">
       {items.map((item) => (
-        <MediaCard
-          key={item.id}
-          item={item}
-          selected={selectedItems.has(item.id)}
-          onSelect={() => onSelectItem(item.id)}
-          onClick={() => {
-            if (item.type === 'folder') {
-              onFolderClick(item.id);
-            } else {
-              onItemClick(item);
-            }
-          }}
-          onLike={() => onLike(item)}
-        />
+        <div key={item.id} className="masonry-item">
+          <MediaCard
+            item={item}
+            selected={selectedItems.has(item.id)}
+            onSelect={() => onSelectItem(item.id)}
+            onClick={() => {
+              if (item.type === 'folder') {
+                onFolderClick(item.id);
+              } else {
+                onItemClick(item);
+              }
+            }}
+            onLike={() => onLike(item)}
+          />
+        </div>
       ))}
-    </Masonry>
+    </div>
   );
 };
 
