@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbwWkqslWS9LxKJQ-9e84NmGZ0LxrKuFGOb5yFYFCwzlcY3oBbHXtAhOD6kStPe59cjc/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyF9WGkaM0egOl_kkV2f3Q50Fqxch1Qw7GalDnsgO3jfA-mwB_UW3GhYZDlhbZngypi4w/exec";
 
 export interface User {
   userId: string;
