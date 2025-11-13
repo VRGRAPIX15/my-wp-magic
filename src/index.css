@@ -128,6 +128,12 @@ All colors MUST be HSL.
     animation: fadeIn 0.3s ease-in;
   }
 
+  /* Ensure smooth image loading */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
   /* Orientation-specific styles */
   @media (orientation: portrait) {
     .portrait\:flex-col {

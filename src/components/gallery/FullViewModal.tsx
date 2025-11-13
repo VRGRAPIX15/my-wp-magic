@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -8,6 +8,7 @@ import { MediaItem } from '@/lib/api';
 import { X, ChevronLeft, ChevronRight, Heart, MessageCircle, Download, Share2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 
 interface FullViewModalProps {
   item: MediaItem;
@@ -75,7 +76,10 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
         className="max-w-[100vw] h-[100vh] sm:max-w-[95vw] sm:h-[95vh] p-0 gap-0 sm:rounded-lg overflow-hidden"
         hideClose={true}
       >
-        <div className="flex flex-col h-full portrait:flex-col landscape:flex-col">
+        <VisuallyHidden.Root>
+          <DialogTitle>{item.name}</DialogTitle>
+        </VisuallyHidden.Root>
+        <div className="flex flex-col h-full w-full">
           {/* Header */}
           <div className="flex items-center justify-between p-2 sm:p-3 border-b bg-card/95 backdrop-blur shrink-0">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
@@ -137,11 +141,11 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
           </div>
 
           {/* Image Container */}
-          <div className="flex-1 relative flex items-center justify-center bg-black overflow-hidden portrait:min-h-0 landscape:min-h-0">
+          <div className="flex-1 relative flex items-center justify-center bg-black overflow-hidden min-h-0">
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30 transition-opacity"
               onClick={handlePrev}
               disabled={currentIndex === 0}
             >
@@ -151,15 +155,16 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
             <img
               src={item.previewUrl}
               alt={item.name}
-              className="w-full h-full object-contain select-none"
+              className="max-w-full max-h-full w-auto h-auto object-contain select-none"
               loading="eager"
               onContextMenu={(e) => e.preventDefault()}
+              draggable={false}
             />
 
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30 transition-opacity"
               onClick={handleNext}
               disabled={currentIndex === total - 1}
             >
