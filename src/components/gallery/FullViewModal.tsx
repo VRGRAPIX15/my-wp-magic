@@ -71,54 +71,77 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="max-w-[100vw] h-[100vh] sm:max-w-7xl sm:h-[95vh] p-0 gap-0 sm:rounded-lg">
-        <div className="flex flex-col h-full">
+      <DialogContent 
+        className="max-w-[100vw] h-[100vh] sm:max-w-[95vw] sm:h-[95vh] p-0 gap-0 sm:rounded-lg overflow-hidden"
+        hideClose={true}
+      >
+        <div className="flex flex-col h-full portrait:flex-col landscape:flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between p-2 sm:p-4 border-b bg-card/95 backdrop-blur">
-            <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
-              <Badge variant="outline" className="text-xs shrink-0">
+          <div className="flex items-center justify-between p-2 sm:p-3 border-b bg-card/95 backdrop-blur shrink-0">
+            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+              <Badge variant="outline" className="text-xs shrink-0 bg-luxury-gold/10 border-luxury-gold/20">
                 {currentIndex + 1} / {total}
               </Badge>
               <span className="text-xs sm:text-sm font-medium truncate">{item.name}</span>
             </div>
-            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={() => onLike(item)}>
-                <Heart className={`w-4 h-4 sm:w-5 sm:h-5 ${item.likedByMe ? 'fill-current text-destructive' : ''}`} />
+            <div className="flex items-center gap-1 shrink-0">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-luxury-gold/10" 
+                onClick={() => onLike(item)}
+              >
+                <Heart className={`w-4 h-4 ${item.likedByMe ? 'fill-current text-luxury-gold' : ''}`} />
               </Button>
-              {!isMobile && <Badge variant="secondary" className="text-xs">{item.likeCount}</Badge>}
+              {!isMobile && <Badge variant="secondary" className="text-xs bg-luxury-gold/10">{item.likeCount}</Badge>}
               
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="h-8 w-8 sm:h-10 sm:w-10"
+                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-luxury-gold/10"
                 onClick={() => setShowCommentSection(!showCommentSection)}
               >
-                <MessageCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${showCommentSection ? 'fill-current text-primary' : ''}`} />
+                <MessageCircle className={`w-4 h-4 ${showCommentSection ? 'fill-current text-luxury-gold' : ''}`} />
               </Button>
-              {!isMobile && <Badge variant="secondary" className="text-xs">{item.commentCount}</Badge>}
+              {!isMobile && <Badge variant="secondary" className="text-xs bg-luxury-gold/10">{item.commentCount}</Badge>}
 
-              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={() => window.open(item.downloadUrl, '_blank')}>
-                <Download className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-luxury-gold/10" 
+                onClick={() => window.open(item.downloadUrl, '_blank')}
+              >
+                <Download className="w-4 h-4" />
               </Button>
 
               {!isMobile && (
-                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={handleShare}>
-                  <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-luxury-gold/10" 
+                  onClick={handleShare}
+                >
+                  <Share2 className="w-4 h-4" />
                 </Button>
               )}
 
-              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={onClose}>
-                <X className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-destructive/10 hover:text-destructive" 
+                onClick={onClose}
+              >
+                <X className="w-4 h-4" />
               </Button>
             </div>
           </div>
 
           {/* Image Container */}
-          <div className="flex-1 relative flex items-center justify-center bg-black/95 p-2 sm:p-4 overflow-hidden">
+          <div className="flex-1 relative flex items-center justify-center bg-black overflow-hidden portrait:min-h-0 landscape:min-h-0">
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30"
               onClick={handlePrev}
               disabled={currentIndex === 0}
             >
@@ -128,15 +151,15 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
             <img
               src={item.previewUrl}
               alt={item.name}
-              className="max-w-full max-h-full object-contain select-none"
-              loading="lazy"
+              className="w-full h-full object-contain select-none"
+              loading="eager"
               onContextMenu={(e) => e.preventDefault()}
             />
 
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30"
               onClick={handleNext}
               disabled={currentIndex === total - 1}
             >
@@ -146,10 +169,10 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
 
           {/* Comment Section */}
           {showCommentSection && (
-            <div className="p-3 sm:p-4 border-t bg-card/95 backdrop-blur space-y-3 animate-fade-in">
+            <div className="p-3 sm:p-4 border-t bg-card/95 backdrop-blur space-y-3 shrink-0">
               <div className="flex flex-col sm:flex-row gap-2">
                 <Select value={preset} onValueChange={setPreset}>
-                  <SelectTrigger className="w-full sm:w-48 h-9">
+                  <SelectTrigger className="w-full sm:w-48 h-9 bg-card border-luxury-gold/20">
                     <SelectValue placeholder="Select preset..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -163,9 +186,12 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
                     placeholder="Add a comment..."
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
-                    className="flex-1 min-h-[60px] sm:min-h-[80px] resize-none text-sm"
+                    className="flex-1 min-h-[60px] sm:min-h-[80px] resize-none text-sm bg-card border-luxury-gold/20"
                   />
-                  <Button onClick={handleSubmitComment} className="h-auto">
+                  <Button 
+                    onClick={handleSubmitComment} 
+                    className="h-auto bg-gradient-to-r from-luxury-gold to-luxury-green hover:opacity-90 text-background"
+                  >
                     <MessageCircle className="w-4 h-4 sm:mr-2" />
                     <span className="hidden sm:inline">Comment</span>
                   </Button>

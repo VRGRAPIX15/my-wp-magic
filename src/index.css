@@ -112,4 +112,38 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  /* Orientation-specific styles */
+  @media (orientation: portrait) {
+    .portrait\:flex-col {
+      flex-direction: column;
+    }
+    .portrait\:min-h-0 {
+      min-height: 0;
+    }
+  }
+
+  @media (orientation: landscape) {
+    .landscape\:flex-col {
+      flex-direction: column;
+    }
+    .landscape\:min-h-0 {
+      min-height: 0;
+    }
+  }
 }
