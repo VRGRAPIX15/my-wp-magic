@@ -113,12 +113,12 @@ export const OnboardingTutorial = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-3xl border-luxury-gold/20 bg-card/95 backdrop-blur-xl p-0 gap-0 overflow-hidden">
+      <DialogContent className="max-w-3xl border-luxury-gold/20 bg-card backdrop-blur-xl p-0 gap-0 overflow-hidden">
         <div className="relative">
           {/* Progress bar */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-muted">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-muted z-10">
             <div 
-              className="h-full bg-gradient-to-r from-luxury-gold to-luxury-purple transition-all duration-300"
+              className="h-full bg-gradient-to-r from-luxury-gold to-luxury-green transition-all duration-300"
               style={{ width: `${((current + 1) / tutorialSteps.length) * 100}%` }}
             />
           </div>
@@ -127,16 +127,16 @@ export const OnboardingTutorial = () => {
             <CarouselContent>
               {tutorialSteps.map((step, index) => (
                 <CarouselItem key={index}>
-                  <div className="flex flex-col items-center text-center p-12 space-y-6 min-h-[500px] justify-center">
-                    <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-luxury-gold to-luxury-purple flex items-center justify-center shadow-lg">
-                      <step.icon className="w-12 h-12 text-luxury-dark" />
+                  <div className="flex flex-col items-center text-center p-8 sm:p-12 space-y-6 min-h-[400px] sm:min-h-[500px] justify-center">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-br from-luxury-gold to-luxury-green flex items-center justify-center shadow-lg">
+                      <step.icon className="w-10 h-10 sm:w-12 sm:h-12 text-background" />
                     </div>
                     
                     <div className="space-y-3 max-w-xl">
-                      <h3 className="text-3xl font-bold bg-gradient-to-r from-luxury-gold to-luxury-purple bg-clip-text text-transparent">
+                      <h3 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-luxury-gold to-luxury-green bg-clip-text text-transparent">
                         {step.title}
                       </h3>
-                      <p className="text-lg text-muted-foreground leading-relaxed">
+                      <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                         {step.description}
                       </p>
                     </div>
@@ -147,7 +147,7 @@ export const OnboardingTutorial = () => {
                           key={i}
                           className={`h-2 rounded-full transition-all duration-300 ${
                             i === current 
-                              ? 'w-8 bg-gradient-to-r from-luxury-gold to-luxury-purple' 
+                              ? 'w-8 bg-gradient-to-r from-luxury-gold to-luxury-green' 
                               : 'w-2 bg-muted'
                           }`}
                         />
@@ -166,11 +166,11 @@ export const OnboardingTutorial = () => {
             )}
           </Carousel>
 
-          <div className="flex items-center justify-between p-6 border-t border-border bg-card/50">
+          <div className="flex items-center justify-between p-4 sm:p-6 border-t border-border bg-card">
             <Button
               variant="ghost"
               onClick={handleSkip}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm"
             >
               Skip Tutorial
             </Button>
@@ -179,14 +179,14 @@ export const OnboardingTutorial = () => {
               {current < tutorialSteps.length - 1 ? (
                 <Button
                   onClick={() => api?.scrollNext()}
-                  className="bg-gradient-to-r from-luxury-gold to-luxury-purple hover:opacity-90 text-luxury-dark font-semibold"
+                  className="bg-gradient-to-r from-luxury-gold to-luxury-green hover:opacity-90 text-background font-semibold"
                 >
                   Next
                 </Button>
               ) : (
                 <Button
                   onClick={handleComplete}
-                  className="bg-gradient-to-r from-luxury-gold to-luxury-purple hover:opacity-90 text-luxury-dark font-semibold"
+                  className="bg-gradient-to-r from-luxury-gold to-luxury-green hover:opacity-90 text-background font-semibold"
                 >
                   Get Started
                 </Button>
