@@ -57,11 +57,11 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        luxury: {
-          gold: "hsl(var(--luxury-gold))",
-          green: "hsl(var(--luxury-green))",
-          deep: "hsl(var(--luxury-deep))",
-          dark: "hsl(var(--luxury-dark))",
+        vr: {
+          purple: {
+            start: "hsl(var(--vr-purple-start))",
+            end: "hsl(var(--vr-purple-end))",
+          },
         },
       },
       borderRadius: {

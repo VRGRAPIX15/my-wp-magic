@@ -16,13 +16,17 @@ interface MediaCardProps {
 const MediaCard = ({ item, selected, onSelect, onClick, onLike }: MediaCardProps) => {
   if (item.type === 'folder') {
     return (
-      <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={onClick}>
+      <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-border/50" 
+            style={{ background: 'linear-gradient(145deg, hsl(var(--card)), hsl(var(--muted)))' }}
+            onClick={onClick}>
         <CardContent className="p-4">
           <div className="flex items-center gap-3">
-            <Folder className="w-12 h-12 text-primary" />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-vr-purple-start to-vr-purple-end">
+              <Folder className="w-6 h-6 text-white" />
+            </div>
             <div className="flex-1 min-w-0">
-              <p className="font-medium truncate">{item.name}</p>
-              <p className="text-xs text-muted-foreground">{item.sizeHuman || 'Folder'}</p>
+              <p className="font-semibold truncate">{item.name}</p>
+              <p className="text-xs text-muted-foreground">Folder</p>
             </div>
           </div>
         </CardContent>
@@ -31,15 +35,29 @@ const MediaCard = ({ item, selected, onSelect, onClick, onLike }: MediaCardProps
   }
 
   return (
-    <Card className="overflow-hidden group relative">
+    <Card className="overflow-hidden group relative transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border/50"
+          style={{ 
+            boxShadow: 'var(--card-shadow)',
+            background: 'linear-gradient(145deg, hsl(var(--card)), hsl(var(--muted)/0.3))'
+          }}>
       <div className="absolute top-2 left-2 z-10">
         <Checkbox
           checked={selected}
           onCheckedChange={onSelect}
           onClick={(e) => e.stopPropagation()}
-          className="bg-background/80 backdrop-blur"
+          className="bg-background/90 backdrop-blur border-2"
         />
       </div>
+      
+      {/* Badges overlay */}
+      {item.likeCount > 0 && (
+        <div className="absolute top-2 right-2 z-10">
+          <Badge className="bg-red-500/95 text-white border-0 backdrop-blur flex items-center gap-1 px-2 py-1">
+            <Heart className="w-3 h-3 fill-white" />
+            <span className="text-xs font-semibold">{item.likeCount}</span>
+          </Badge>
+        </div>
+      )}
       
       <div className="cursor-pointer" onClick={onClick}>
         <div className="relative aspect-square overflow-hidden bg-muted">
@@ -48,51 +66,48 @@ const MediaCard = ({ item, selected, onSelect, onClick, onLike }: MediaCardProps
             srcSet={`${item.thumbnail} 480w, ${item.previewUrl} 1200w`}
             sizes="(max-width: 600px) 100vw, (max-width:1200px) 50vw, 33vw"
             alt={item.name}
-            className="w-full h-full object-cover transition-transform group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             loading="lazy"
           />
+          
+          {/* Name overlay at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/75 to-transparent p-2">
+            <p className="text-white text-xs font-medium truncate">{item.name}</p>
+          </div>
         </div>
       </div>
 
-      <CardContent className="p-3">
-        <p className="text-sm font-medium truncate mb-2">{item.name}</p>
+      <CardContent className="p-2.5">
         <div className="flex items-center justify-between gap-2">
           <span className="text-xs text-muted-foreground">{item.sizeHuman}</span>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <Button
               variant="ghost"
               size="icon"
-              className="h-7 w-7"
+              className="h-7 w-7 hover:bg-primary/10"
               onClick={(e) => {
                 e.stopPropagation();
                 onLike();
               }}
             >
-              <Heart className={`w-4 h-4 ${item.likedByMe ? 'fill-current text-destructive' : ''}`} />
+              <Heart className={`w-4 h-4 ${item.likedByMe ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} />
             </Button>
-            {item.likeCount > 0 && (
-              <Badge variant="secondary" className="text-xs">
-                {item.likeCount}
-              </Badge>
-            )}
             {item.commentCount > 0 && (
-              <>
-                <MessageCircle className="w-4 h-4 text-muted-foreground" />
-                <Badge variant="secondary" className="text-xs">
-                  {item.commentCount}
-                </Badge>
-              </>
+              <div className="flex items-center gap-1">
+                <MessageCircle className="w-3.5 h-3.5 text-blue-500" />
+                <span className="text-xs font-medium text-blue-500">{item.commentCount}</span>
+              </div>
             )}
             <Button
               variant="ghost"
               size="icon"
-              className="h-7 w-7"
+              className="h-7 w-7 hover:bg-primary/10"
               onClick={(e) => {
                 e.stopPropagation();
                 window.open(item.downloadUrl, '_blank');
               }}
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-4 h-4 text-muted-foreground" />
             </Button>
           </div>
         </div>

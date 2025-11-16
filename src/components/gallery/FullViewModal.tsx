@@ -81,39 +81,40 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
           <DialogTitle>{item.name}</DialogTitle>
         </VisuallyHidden.Root>
         <div className="flex flex-col h-full w-full">
-          {/* Sticky Header */}
-          <div className="sticky top-0 z-50 flex items-center justify-between p-2 sm:p-3 border-b bg-card/95 backdrop-blur shrink-0">
+          {/* Sticky Header with gradient */}
+          <div className="sticky top-0 z-50 flex items-center justify-between p-2 sm:p-3 border-b backdrop-blur-xl shrink-0"
+               style={{ background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%)' }}>
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-              <Badge variant="outline" className="text-xs shrink-0 bg-luxury-gold/10 border-luxury-gold/20">
+              <Badge variant="outline" className="text-xs shrink-0 bg-white/20 border-white/30 text-white backdrop-blur">
                 {currentIndex + 1} / {total}
               </Badge>
-              <span className="text-xs sm:text-sm font-medium truncate">{item.name}</span>
+              <span className="text-xs sm:text-sm font-medium truncate text-white">{item.name}</span>
             </div>
             <div className="flex items-center gap-1 shrink-0">
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-luxury-gold/10" 
+                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-white/20 text-white" 
                 onClick={() => onLike(item)}
               >
-                <Heart className={`w-4 h-4 ${item.likedByMe ? 'fill-current text-luxury-gold' : ''}`} />
+                <Heart className={`w-4 h-4 ${item.likedByMe ? 'fill-current text-red-400' : ''}`} />
               </Button>
-              {!isMobile && <Badge variant="secondary" className="text-xs bg-luxury-gold/10">{item.likeCount}</Badge>}
+              {!isMobile && <Badge variant="secondary" className="text-xs bg-white/20 text-white border-0">{item.likeCount}</Badge>}
               
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-luxury-gold/10"
+                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-white/20 text-white"
                 onClick={() => setShowCommentSection(!showCommentSection)}
               >
-                <MessageCircle className={`w-4 h-4 ${showCommentSection ? 'fill-current text-luxury-gold' : ''}`} />
+                <MessageCircle className={`w-4 h-4 ${showCommentSection ? 'fill-current' : ''}`} />
               </Button>
-              {!isMobile && <Badge variant="secondary" className="text-xs bg-luxury-gold/10">{item.commentCount}</Badge>}
+              {!isMobile && <Badge variant="secondary" className="text-xs bg-white/20 text-white border-0">{item.commentCount}</Badge>}
 
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-luxury-gold/10" 
+                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-white/20 text-white" 
                 onClick={() => window.open(item.downloadUrl, '_blank')}
               >
                 <Download className="w-4 h-4" />
@@ -123,7 +124,7 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-luxury-gold/10" 
+                  className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-white/20 text-white" 
                   onClick={handleShare}
                 >
                   <Share2 className="w-4 h-4" />
@@ -133,7 +134,7 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-destructive/10 hover:text-destructive" 
+                className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-red-500/20 text-white hover:text-red-400" 
                 onClick={onClose}
               >
                 <X className="w-4 h-4" />
@@ -151,30 +152,33 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30 transition-opacity"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full disabled:opacity-30 transition-all"
+              style={{ background: 'rgba(102, 126, 234, 0.9)', backdropFilter: 'blur(10px)' }}
               onClick={handlePrev}
               disabled={currentIndex === 0}
             >
-              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </Button>
 
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30 transition-opacity"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full disabled:opacity-30 transition-all"
+              style={{ background: 'rgba(118, 75, 162, 0.9)', backdropFilter: 'blur(10px)' }}
               onClick={handleNext}
               disabled={currentIndex === total - 1}
             >
-              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </Button>
           </div>
 
           {/* Sticky Comment Section */}
           {showCommentSection && (
-            <div className="sticky bottom-0 z-50 p-3 sm:p-4 border-t bg-card/95 backdrop-blur space-y-3 shrink-0">
+            <div className="sticky bottom-0 z-50 p-3 sm:p-4 border-t backdrop-blur-xl space-y-3 shrink-0"
+                 style={{ background: 'rgba(102, 126, 234, 0.95)' }}>
               <div className="flex flex-col sm:flex-row gap-2">
                 <Select value={preset} onValueChange={setPreset}>
-                  <SelectTrigger className="w-full sm:w-48 h-9 bg-card border-luxury-gold/20">
+                  <SelectTrigger className="w-full sm:w-48 h-9 bg-white/10 border-white/30 text-white backdrop-blur">
                     <SelectValue placeholder="Select preset..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -188,11 +192,11 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
                     placeholder="Add a comment..."
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
-                    className="flex-1 min-h-[60px] sm:min-h-[80px] resize-none text-sm bg-card border-luxury-gold/20"
+                    className="flex-1 min-h-[60px] sm:min-h-[80px] resize-none text-sm bg-white/10 border-white/30 text-white placeholder:text-white/60 backdrop-blur"
                   />
                   <Button 
                     onClick={handleSubmitComment} 
-                    className="h-auto bg-gradient-to-r from-luxury-gold to-luxury-green hover:opacity-90 text-background"
+                    className="h-auto bg-white text-vr-purple-start hover:bg-white/90"
                   >
                     <MessageCircle className="w-4 h-4 sm:mr-2" />
                     <span className="hidden sm:inline">Comment</span>
