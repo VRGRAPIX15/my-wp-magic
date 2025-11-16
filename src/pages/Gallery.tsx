@@ -98,7 +98,7 @@ const Gallery = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="sticky top-0 z-50">
-        <TopBar />
+        <TopBar counts={totalCounts} />
         <SecondBar
         breadcrumb={breadcrumb}
         onBreadcrumbClick={handleFolderClick}
