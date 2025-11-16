@@ -7,7 +7,7 @@ import SecondBar from '@/components/gallery/SecondBar';
 import ThirdBar from '@/components/gallery/ThirdBar';
 import MasonryGrid from '@/components/gallery/MasonryGrid';
 import FullViewModal from '@/components/gallery/FullViewModal';
-import { OnboardingTutorial } from '@/components/OnboardingTutorial';
+
 
 const Gallery = () => {
   const { user, token } = useAuth();
@@ -96,9 +96,7 @@ const Gallery = () => {
   const fileCount = items.filter(i => i.type !== 'folder').length;
 
   return (
-    <>
-      <OnboardingTutorial />
-      <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
         <TopBar />
       <SecondBar
         breadcrumb={breadcrumb}
@@ -195,8 +193,7 @@ const Gallery = () => {
           }}
         />
       )}
-      </div>
-    </>
+    </div>
   );
 };
 
