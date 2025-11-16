@@ -97,8 +97,9 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <div className="sticky top-0 z-50">
         <TopBar />
-      <SecondBar
+        <SecondBar
         breadcrumb={breadcrumb}
         onBreadcrumbClick={handleFolderClick}
         gridSize={gridSize}
@@ -123,6 +124,7 @@ const Gallery = () => {
         onSearchChange={setSearchQuery}
         onSearch={handleSearch}
       />
+      </div>
       <main className="flex-1 p-4 overflow-y-auto">
         {loading ? (
           <div className="flex items-center justify-center h-64">
