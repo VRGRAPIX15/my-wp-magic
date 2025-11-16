@@ -128,10 +128,14 @@ All colors MUST be HSL.
     animation: fadeIn 0.3s ease-in;
   }
 
-  /* Ensure smooth image loading */
+  /* Ensure smooth image loading and rendering */
   img {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    image-rendering: auto;
+  }
+
+  /* Smooth zoom/pan transitions */
+  .transition-transform {
+    transition: transform 0.1s ease-out;
   }
 
   /* Orientation-specific styles */
