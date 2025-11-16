@@ -13,10 +13,8 @@ interface MasonryGridProps {
 }
 
 const MasonryGrid = ({ items, gridSize, selectedItems, onSelectItem, onFolderClick, onItemClick, onLike }: MasonryGridProps) => {
-  // Use a pure-CSS masonry (columns) layout for responsiveness.
-  // Keep all handlers and logic intact – we only change the layout wrapper.
   return (
-    <div className="masonry" aria-live="polite">
+    <div className="masonry" data-grid-size={gridSize} aria-live="polite">
       {items.map((item) => (
         <div key={item.id} className="masonry-item">
           <MediaCard

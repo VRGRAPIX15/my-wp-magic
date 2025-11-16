@@ -9,6 +9,7 @@ import { X, ChevronLeft, ChevronRight, Heart, MessageCircle, Download, Share2 } 
 import { useToast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import ZoomableImage from './ZoomableImage';
 
 interface FullViewModalProps {
   item: MediaItem;
@@ -80,8 +81,8 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
           <DialogTitle>{item.name}</DialogTitle>
         </VisuallyHidden.Root>
         <div className="flex flex-col h-full w-full">
-          {/* Header */}
-          <div className="flex items-center justify-between p-2 sm:p-3 border-b bg-card/95 backdrop-blur shrink-0">
+          {/* Sticky Header */}
+          <div className="sticky top-0 z-50 flex items-center justify-between p-2 sm:p-3 border-b bg-card/95 backdrop-blur shrink-0">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
               <Badge variant="outline" className="text-xs shrink-0 bg-luxury-gold/10 border-luxury-gold/20">
                 {currentIndex + 1} / {total}
@@ -140,31 +141,27 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
             </div>
           </div>
 
-          {/* Image Container */}
-          <div className="flex-1 relative flex items-center justify-center bg-black overflow-hidden min-h-0">
+          {/* Image Container with Zoom/Pan */}
+          <div className="flex-1 relative bg-black overflow-hidden min-h-0">
+            <ZoomableImage
+              src={item.previewUrl}
+              alt={item.name}
+            />
+            
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30 transition-opacity"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30 transition-opacity"
               onClick={handlePrev}
               disabled={currentIndex === 0}
             >
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </Button>
 
-            <img
-              src={item.previewUrl}
-              alt={item.name}
-              className="max-w-full max-h-full w-auto h-auto object-contain select-none"
-              loading="eager"
-              onContextMenu={(e) => e.preventDefault()}
-              draggable={false}
-            />
-
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30 transition-opacity"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 backdrop-blur h-10 w-10 sm:h-12 sm:w-12 rounded-full hover:bg-background/90 disabled:opacity-30 transition-opacity"
               onClick={handleNext}
               disabled={currentIndex === total - 1}
             >
@@ -172,9 +169,9 @@ const FullViewModal = ({ item, items, onClose, onNavigate, onLike, onComment }: 
             </Button>
           </div>
 
-          {/* Comment Section */}
+          {/* Sticky Comment Section */}
           {showCommentSection && (
-            <div className="p-3 sm:p-4 border-t bg-card/95 backdrop-blur space-y-3 shrink-0">
+            <div className="sticky bottom-0 z-50 p-3 sm:p-4 border-t bg-card/95 backdrop-blur space-y-3 shrink-0">
               <div className="flex flex-col sm:flex-row gap-2">
                 <Select value={preset} onValueChange={setPreset}>
                   <SelectTrigger className="w-full sm:w-48 h-9 bg-card border-luxury-gold/20">
